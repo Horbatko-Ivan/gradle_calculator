@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'org.goit'
+version ''
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'org.goit.Main'
+    }
+    archivesBaseName = 'calculator'
+    from configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    with jar
+}
